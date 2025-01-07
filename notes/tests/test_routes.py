@@ -1,5 +1,7 @@
 from http import HTTPStatus
+
 from django.urls import reverse
+
 from .base_test_class import TestBaseCase
 
 
@@ -7,10 +9,10 @@ class TestRoutes(TestBaseCase):
     """Тестирование маршрутов."""
 
     def test_pages_availability_for_everyone(self):
-        """Главная страница доступна анонимному пользователю.
-
-        Cтраницы регистрации пользователелей, входа в учётную запись
-        и выхода из неё доступны всем пользователям.
+        """
+        Главная страница доступна анонимному пользователю.Cтраницы регистрации
+        пользователелей, входа в учётную запись и выхода из неё доступны
+        всем пользователям.
         """
         urls = (
                 ('notes:home', None),
@@ -25,12 +27,11 @@ class TestRoutes(TestBaseCase):
                 self.assertEqual(response.status_code, HTTPStatus.OK)
 
     def test_pages_availability_for_auth_users(self):
-        """Аутентифицированную пользователю доступны.
-
+        """
+        Аутентифицированную пользователю доступны:
         страница со списком заметок notes/,
         страница успешного добавления заметки done/,
         страница добавления новой заметки add/.
-
         """
         urls = (
             ('notes:list', None),
@@ -44,13 +45,10 @@ class TestRoutes(TestBaseCase):
                 self.assertEqual(response.status_code, HTTPStatus.OK)
 
     def test_availability_for_detail_edit_and_delete(self):
-        """.
-
-        Страницы отдельной заметки, удаления и редактирования
-        заметки доступны только автору заметки.
-        Если на эти страницы попытается зайти другой
+        """
+        Страницы отдельной заметки, удаления и редактирования заметки доступны
+        только автору заметки.Если на эти страницы попытается зайти другой
         пользователь — вернётся ошибка 404.
-
         """
         users_statuses = (
             (self.author, HTTPStatus.OK),
@@ -65,13 +63,11 @@ class TestRoutes(TestBaseCase):
                     self.assertEqual(response.status_code, status)
 
     def test_redirect_for_anonymous_client(self):
-        """.
-
+        """
         При попытке перейти на страницу списка заметок, страницу успешного
         добавления записи, страницу добавления заметки, отдельной заметки,
         редактирования или удаления заметки анонимный пользователь
         перенаправляется на страницу логина.
-
         """
         login_url = reverse('users:login')
         urls = (

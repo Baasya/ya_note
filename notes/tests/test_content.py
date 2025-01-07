@@ -1,6 +1,6 @@
+from django.urls import reverse
 from notes.forms import NoteForm
 
-from django.urls import reverse
 from .base_test_class import TestBaseCase
 
 
@@ -8,14 +8,10 @@ class TestContent(TestBaseCase):
     """Тестирование контента."""
 
     def test_notes_in_object_list(self):
-        """.
-
+        """
         Отдельная заметка передаётся на страницу со списком заметок в списке
-        object_list, в словаре context.
-
-        В список заметок одного пользователя не попадают заметки другого
-        пользователя.
-
+        object_list, в словаре context.В список заметок одного пользователя
+        не попадают заметки другого пользователя.
         """
         users_values = (
             (self.author, True),
